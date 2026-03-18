@@ -14,10 +14,10 @@ The concept behind AXIOM is a silent, autonomous intelligence. Not an assistant,
 
 Clone the repository and install dependencies:
 
-\`\`\`bash
+```bash
 npm install
 npm run dev
-\`\`\`
+```
 
 Open http://localhost:3000 in your browser.
 
