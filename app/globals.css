@@ -1,26 +1,53 @@
+@import "@fontsource/cormorant-garamond/300.css";
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/jetbrains-mono/400.css";
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-bg-primary: #080608;
+  --color-bg-secondary: #150F14;
+  --color-accent: #C0392B;
+  --color-accent-light: #E8756A;
+  --color-text-primary: #F5D0CC;
+  --color-text-muted: #8A6E6C;
+
+  --font-family-serif: "Cormorant Garamond", serif;
+  --font-family-mono: "JetBrains Mono", monospace;
+  --font-family-sans: "Inter", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #080608;
+  color: #F5D0CC;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #C0392B;
+  color: #F5D0CC;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080608;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C0392B;
 }
