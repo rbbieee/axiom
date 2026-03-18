@@ -27,9 +27,14 @@ export default function Navbar() {
         AXIOM
       </span>
 
-      <a href="#access" className="nav-link">
-        Request Access
-      </a>
+      <div style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
+        <a href="/log" className="nav-link">
+          Terminal
+        </a>
+        <a href="#access" className="nav-link">
+          Request Access
+        </a>
+      </div>
 
       <style>{`
         .nav-link {
