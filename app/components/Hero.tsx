@@ -1,8 +1,48 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
+
+const phrases = [
+  "Thinking.",
+  "Planning.",
+  "Executing.",
+  "Adapting.",
+  "Done.",
+];
 
 export default function Hero() {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = phrases[phraseIndex];
+
+    if (!deleting && displayed.length < current.length) {
+      const timeout = setTimeout(() => {
+        setDisplayed(current.slice(0, displayed.length + 1));
+      }, 80);
+      return () => clearTimeout(timeout);
+    }
+
+    if (!deleting && displayed.length === current.length) {
+      const timeout = setTimeout(() => setDeleting(true), 1800);
+      return () => clearTimeout(timeout);
+    }
+
+    if (deleting && displayed.length > 0) {
+      const timeout = setTimeout(() => {
+        setDisplayed(current.slice(0, displayed.length - 1));
+      }, 40);
+      return () => clearTimeout(timeout);
+    }
+
+    if (deleting && displayed.length === 0) {
+      setDeleting(false);
+      setPhraseIndex((prev) => (prev + 1) % phrases.length);
+    }
+  }, [displayed, deleting, phraseIndex]);
+
   return (
     <section
       style={{
@@ -48,6 +88,26 @@ export default function Hero() {
 
       <p
         style={{
+          fontFamily: "JetBrains Mono, monospace",
+          fontSize: "1rem",
+          color: "#C0392B",
+          height: "1.5rem",
+          marginBottom: "1.5rem",
+          letterSpacing: "0.1em",
+        }}
+      >
+        {displayed}
+        <span
+          style={{
+            borderRight: "2px solid #C0392B",
+            marginLeft: "2px",
+            animation: "blink 1s step-end infinite",
+          }}
+        />
+      </p>
+
+      <p
+        style={{
           fontFamily: "Inter, sans-serif",
           fontSize: "1rem",
           color: "#8A6E6C",
@@ -71,17 +131,17 @@ export default function Hero() {
           border: "1px solid #C0392B",
           padding: "0.9rem 2.5rem",
           cursor: "pointer",
-          transition: "background 0.3s ease",
         }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.background = "rgba(192,57,43,0.15)")
-        }
-        onMouseLeave={(e) =>
-          (e.currentTarget.style.background = "transparent")
-        }
       >
         Request Access
       </button>
+
+      <style>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 }
