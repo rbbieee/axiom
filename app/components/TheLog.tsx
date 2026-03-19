@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const logLines = [
   "AXIOM v1.0 initialized",
@@ -29,23 +29,47 @@ function getLineColor(line: string): string {
 
 export default function TheLog() {
   const [visibleCount, setVisibleCount] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  function startLog() {
+    setVisibleCount(0);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    let count = 0;
+    intervalRef.current = setInterval(() => {
+      count++;
+      setVisibleCount(count);
+      if (count >= logLines.length) {
+        clearInterval(intervalRef.current!);
+      }
+    }, 400);
+  }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleCount((prev) => {
-        if (prev >= logLines.length) {
-          clearInterval(interval);
-          return prev;
-        }
-        return prev + 1;
-      });
-    }, 400);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startLog();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
 
-    return () => clearInterval(interval);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (
     <section
+      ref={sectionRef}
       style={{
         padding: "8rem 2rem",
         maxWidth: "960px",
