@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 const phrases = [
   "Thinking.",
@@ -11,32 +12,31 @@ const phrases = [
 ];
 
 export default function Hero() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const current = phrases[phraseIndex];
-
     if (!deleting && displayed.length < current.length) {
       const timeout = setTimeout(() => {
         setDisplayed(current.slice(0, displayed.length + 1));
       }, 80);
       return () => clearTimeout(timeout);
     }
-
     if (!deleting && displayed.length === current.length) {
       const timeout = setTimeout(() => setDeleting(true), 1800);
       return () => clearTimeout(timeout);
     }
-
     if (deleting && displayed.length > 0) {
       const timeout = setTimeout(() => {
         setDisplayed(current.slice(0, displayed.length - 1));
       }, 40);
       return () => clearTimeout(timeout);
     }
-
     if (deleting && displayed.length === 0) {
       setDeleting(false);
       setPhraseIndex((prev) => (prev + 1) % phrases.length);
@@ -76,9 +76,10 @@ export default function Hero() {
           fontSize: "clamp(3rem, 10vw, 8rem)",
           fontWeight: 300,
           lineHeight: 1,
-          color: "#F5D0CC",
+          color: isDark ? "#F5D0CC" : "#150F14",
           marginBottom: "2rem",
           letterSpacing: "-0.02em",
+          transition: "color 0.6s ease",
         }}
       >
         The last intelligence
@@ -110,10 +111,11 @@ export default function Hero() {
         style={{
           fontFamily: "Inter, sans-serif",
           fontSize: "1rem",
-          color: "#8A6E6C",
+          color: isDark ? "#8A6E6C" : "#6A4A48",
           maxWidth: "420px",
           lineHeight: 1.7,
           marginBottom: "3rem",
+          transition: "color 0.6s ease",
         }}
       >
         AXIOM does not assist. It decides, executes, and disappears. No
@@ -126,11 +128,12 @@ export default function Hero() {
           fontSize: "0.75rem",
           letterSpacing: "0.2em",
           textTransform: "uppercase",
-          color: "#F5D0CC",
+          color: isDark ? "#F5D0CC" : "#150F14",
           background: "transparent",
           border: "1px solid #C0392B",
           padding: "0.9rem 2.5rem",
           cursor: "pointer",
+          transition: "color 0.6s ease",
         }}
       >
         Request Access

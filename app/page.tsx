@@ -1,3 +1,6 @@
+"use client";
+
+import { useTheme } from "./context/ThemeContext";
 import Access from "./components/Access";
 import Capabilities from "./components/Capabilities";
 import FadeIn from "./components/FadeIn";
@@ -10,9 +13,16 @@ import ScrollProgress from "./components/ScrollProgress";
 import TheLog from "./components/TheLog";
 
 export default function Home() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <PageTransition>
-      <main>
+      <main style={{
+        background: isDark ? "#080608" : "#F5F0EF",
+        transition: "background 0.6s ease",
+        minHeight: "100vh",
+      }}>
         <ScrollProgress />
         <Navbar />
         <FadeIn>
