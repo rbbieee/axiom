@@ -5,11 +5,13 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Manifesto from "./components/Manifesto";
 import Navbar from "./components/Navbar";
+import ScrollProgress from "./components/ScrollProgress";
 import TheLog from "./components/TheLog";
 
 export default function Home() {
   return (
     <main>
+      <ScrollProgress />
       <Navbar />
       <FadeIn>
         <Hero />
