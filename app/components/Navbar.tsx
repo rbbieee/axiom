@@ -28,12 +28,9 @@ export default function Navbar() {
       </span>
 
       <div style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
-        <a href="/log" className="nav-link">
-          Terminal
-        </a>
-        <a href="#access" className="nav-link">
-          Request Access
-        </a>
+        <a href="/status" className="nav-link">Status</a>
+        <a href="/log" className="nav-link">Terminal</a>
+        <a href="#access" className="nav-link">Request Access</a>
       </div>
 
       <style>{`
